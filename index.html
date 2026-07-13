@@ -201,8 +201,8 @@
 <div class="wrap">
 
   <header>
-    <span class="eyebrow"><span class="dot"></span> Venta de Pokemones a los mejores precios</span>
-    <h1>Zephyr  <span>Pokémon GO</span></h1>
+    <span class="eyebrow"><span class="dot"></span> Intercambios entre amigos</span>
+    <h1>Catálogo <span>Pokémon GO</span></h1>
     <p>Toca el nombre de un Pokémon para ver precio, tamaño, si es shiny y cómo apartarlo.</p>
 
     <div class="pay-row">
@@ -288,7 +288,7 @@ const POKEMONES = [
     disfraz: "Gorra equipo Mistico",
     fondo: "",
     dynamax: "",
-    tamano: "0.4 m",
+    tamano: "0.35m",
     imagen: "pikachu.png",
     descripcion: "Todos lo conocen."
   },
@@ -302,23 +302,23 @@ const POKEMONES = [
     disfraz: "",
     fondo: "",
     dynamax: "Gigamax",
-    tamano: "2.03 m",
+    tamano: "2.03m",
     imagen: "charizard-g.png",
     descripcion: "Exclusivo y util en combates Max."
   },
   {
     nombre: "Latias",
-    tipos: ["Normal"],
+    tipos: ["Dragón","Psíquico"],
     precio: 70,
     enVenta: true,
     shiny: true,
     evento: "",
-    disfraz: "",
+    disfraz: "Pokemon GO Fest 2026",
     fondo: "Pokemon GO Fest 2026",
     dynamax: "",
-    tamano: "2.1 m",
+    tamano: "1.32m",
     imagen: "latias.png",
-    descripcion: "No muy util para combates o incursiones, pero es es una buena pieza de coleccion."
+    descripcion: "No muy util para combates o incursiones, pero es una buena pieza de coleccion."
   },
   {
     nombre: "Mewtwo",
@@ -328,11 +328,11 @@ const POKEMONES = [
     shiny: false,
     evento: "Pokemon GO Fest 2026",
     disfraz: "",
-    fondo: "Pokemon GO Fest 2026",
+    fondo: "",
     dynamax: "",
-    tamano: "0.3 m",
+    tamano: "1.56m",
     imagen: "mewtwo.png",
-    descripcion: "Ataque exclusivo; Contraataque."
+    descripcion: "Ataque exclusivo; Onda Mental."
   },
     {
     nombre: "Giratina (Forma Origen)",
@@ -344,9 +344,107 @@ const POKEMONES = [
     disfraz: "",
     fondo: "",
     dynamax: "",
-    tamano: "6.5 m",
+    tamano: "6.5m",
     imagen: "giratina.png",
     descripcion: "La aura en persona, y ahora Shiny."
+  },
+    {
+    nombre: "Entei",
+    tipos: ["Fuego"],
+    precio: 100,
+    enVenta: true,
+    shiny: true,
+    evento: "",
+    disfraz: "",
+    fondo: "",
+    dynamax: "",
+    tamano: "2.31m",
+    imagen: "entei.png",
+    descripcion: "Una pieza de colección especial."
+  },
+    {
+    nombre: "Groudon",
+    tipos: ["Tierra"],
+    precio: 100,
+    enVenta: true,
+    shiny: true,
+    evento: "",
+    disfraz: "",
+    fondo: "",
+    dynamax: "",
+    tamano: "3.58m",
+    imagen: "groudon.png",
+    descripcion: "El creador de la tierra."
+  },
+    {
+    nombre: "Swablu",
+    tipos: ["Normal", "Volador"],
+    precio: 50,
+    enVenta: true,
+    shiny: true,
+    evento: "",
+    disfraz: "",
+    fondo: "",
+    dynamax: "",
+    tamano: "0.4m",
+    imagen: "swablu.png",
+    descripcion: "Es lindo."
+  },
+    {
+    nombre: "Wailmer",
+    tipos: ["Agua"],
+    precio: 50,
+    enVenta: true,
+    shiny: true,
+    evento: "",
+    disfraz: "",
+    fondo: "",
+    dynamax: "",
+    tamano: "2.32m",
+    imagen: "wailmer.png",
+    descripcion: "Evolucionado es otra cosa."
+  },
+    {
+    nombre: "Quaxwell",
+    tipos: ["Agua"],
+    precio: 50,
+    enVenta: true,
+    shiny: true,
+    evento: "",
+    disfraz: "",
+    fondo: "",
+    dynamax: "",
+    tamano: "1.22m",
+    imagen: "quaxwell.png",
+    descripcion: "Un espectáculo de baile."
+  },
+    {
+    nombre: "Melmetal",
+    tipos: ["Acero"],
+    precio: 75,
+    enVenta: true,
+    shiny: true,
+    evento: "",
+    disfraz: "",
+    fondo: "",
+    dynamax: "",
+    tamano: "2.36m",
+    imagen: "melmetal.png",
+    descripcion: "Un Pokémon mítico y Shiny para tu colección."
+  },
+    {
+    nombre: "Hydreigon",
+    tipos: ["Dragón", "Siniestro"],
+    precio: 125,
+    enVenta: true,
+    shiny: true,
+    evento: "Community Day Deino 2026",
+    disfraz: "",
+    fondo: "Community Day 2026",
+    dynamax: "",
+    tamano: "1.91m",
+    imagen: "hydreigon.png",
+    descripcion: "En un nivel bajo, pero bastante raro y exclusivo."
   },
 ];
 
@@ -377,6 +475,23 @@ function tipoColor(tipo){
   return `background:${c[0]}; color:${c[1]};`;
 }
 
+/* =====================================================================
+   COMPATIBILIDAD DE IMÁGENES (SRC)
+   =====================================================================
+   Ya configurado con tu repositorio real:
+   https://github.com/ZephyrXVex4z/Pok-mon-GO-Shop
+
+   Tus imágenes viven en la RAÍZ del repo (no en una carpeta /images),
+   así que la base apunta directo ahí. Si en el futuro subes imágenes
+   nuevas, ponlas también en la raíz del repo (junto a index.html).
+   ===================================================================== */
+const GITHUB_IMAGES_BASE = "https://raw.githubusercontent.com/ZephyrXVex4z/Pok-mon-GO-Shop/main/";
+
+function imgSrc(nombreArchivo){
+  const base = GITHUB_IMAGES_BASE.trim();
+  return (base ? base : "") + nombreArchivo;
+}
+
 const FALLBACK_IMG =
   "data:image/svg+xml;utf8," + encodeURIComponent(`
     <svg xmlns='http://www.w3.org/2000/svg' width='92' height='92'>
@@ -386,7 +501,7 @@ const FALLBACK_IMG =
     </svg>`);
 
 function waLink(p){
-  const msg = `Hola, Me interesa el ${p.nombre} por ($${p.precio})`;
+  const msg = `Hola, Me interesa ${p.nombre} por ($${p.precio})`;
   return `https://wa.me/529844681306?text=${encodeURIComponent(msg)}`;
 }
 
@@ -420,7 +535,7 @@ function renderCatalogo(soloEnVenta){
         <div class="card-body">
           <div class="card-body-inner">
             <div class="media">
-              <img src="images/${p.imagen}" alt="${p.nombre}" onerror="this.onerror=null;this.src='${FALLBACK_IMG}';">
+              <img src="${imgSrc(p.imagen)}" alt="${p.nombre}" onerror="this.onerror=null;this.src='${FALLBACK_IMG}';">
               <dl class="stats">
                 <div class="stat"><dt>Tamaño</dt><dd>${p.tamano}</dd></div>
                 <div class="stat"><dt>Shiny</dt><dd>${p.shiny ? 'Sí' : 'No'}</dd></div>
@@ -434,37 +549,4 @@ function renderCatalogo(soloEnVenta){
             </div>
             <p class="desc">${p.descripcion}</p>
             <a class="wa-btn" href="${waLink(p)}" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="#0d2b1c"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01a8.1 8.1 0 0 1-4.14-1.13l-.3-.18-3.14.82.84-3.06-.19-.31a8.15 8.15 0 0 1-1.24-4.25c0-4.5 3.66-8.16 8.19-8.16 2.19 0 4.24.85 5.79 2.41a8.13 8.13 0 0 1 2.4 5.78c0 4.5-3.67 8.08-8.2 8.08zm4.48-6.14c-.24-.12-1.45-.71-1.67-.8-.22-.08-.39-.12-.55.12-.16.24-.63.79-.78.96-.14.16-.29.18-.53.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.35-1.67-.14-.24-.02-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.31-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.41-.55-.42-.14-.01-.31-.01-.47-.01-.16 0-.43.06-.65.31-.22.24-.86.84-.86 2.05 0 1.21.88 2.38 1 2.54.12.16 1.73 2.64 4.2 3.7.59.25 1.05.4 1.41.52.59.19 1.13.16 1.55.1.47-.07 1.45-.59 1.66-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28z"/></svg>
-              Escríbeme por WhatsApp
-            </a>
-          </div>
-        </div>
-      `;
-
-      const head = card.querySelector('.card-head');
-      const body = card.querySelector('.card-body');
-      head.addEventListener('click', () => {
-        const isOpen = body.classList.toggle('open');
-        head.setAttribute('aria-expanded', String(isOpen));
-        body.style.maxHeight = isOpen ? body.scrollHeight + 'px' : '0px';
-      });
-
-      cont.appendChild(card);
-    });
-}
-
-let soloEnVenta = false;
-const sw = document.getElementById('filtroSwitch');
-function toggleFiltro(){
-  soloEnVenta = !soloEnVenta;
-  sw.classList.toggle('on', soloEnVenta);
-  sw.setAttribute('aria-checked', String(soloEnVenta));
-  renderCatalogo(soloEnVenta);
-}
-sw.addEventListener('click', toggleFiltro);
-sw.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleFiltro(); }});
-
-renderCatalogo(false);
-</script>
-</body>
-</html>
+              <svg viewBox="0 0 24 24" fill="#0d2b1c"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.4

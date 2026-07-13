@@ -39,7 +39,6 @@
 
   .wrap{ max-width: 640px; margin: 0 auto; }
 
-  /* ---------- HEADER ---------- */
   header{ text-align:center; margin-bottom: 22px; }
   .eyebrow{
     display:inline-flex; align-items:center; gap:8px;
@@ -54,7 +53,6 @@
   h1 span{ color: var(--red); }
   header p{ color: var(--text-dim); font-size: 15px; margin: 0 auto; max-width: 420px; line-height:1.5;}
 
-  /* payment pills */
   .pay-row{
     display:flex; flex-wrap:wrap; justify-content:center; gap:8px;
     margin-top: 16px;
@@ -66,7 +64,6 @@
     padding: 7px 13px; border-radius: 999px;
   }
 
-  /* ---------- FILTER TOGGLE (poké-switch) ---------- */
   .filter-bar{
     display:flex; align-items:center; justify-content:center; gap:10px;
     margin: 20px 0 6px; font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--text-dim);
@@ -84,7 +81,6 @@
   .switch.on::after{ transform: translateX(20px); }
   .switch.on{ filter: saturate(1.3); }
 
-  /* ---------- CARDS ---------- */
   #catalogo{ display:flex; flex-direction:column; gap:12px; margin-top:18px; }
 
   .card{
@@ -179,7 +175,6 @@
   }
   .wa-btn svg{ width:16px; height:16px; flex:none; }
 
-  /* ---------- FLOATING WHATSAPP BUTTON ---------- */
   .fab{
     position:fixed; right:18px; bottom:18px; z-index:20;
     width:56px; height:56px; border-radius:50%;
@@ -201,8 +196,8 @@
 <div class="wrap">
 
   <header>
-    <span class="eyebrow"><span class="dot"></span> Intercambios entre amigos</span>
-    <h1>Catálogo <span>Pokémon GO</span></h1>
+    <span class="eyebrow"><span class="dot"></span> Venta de Pokemones a los mejores precios</span>
+    <h1>Zephyr  <span>Pokémon GO</span></h1>
     <p>Toca el nombre de un Pokémon para ver precio, tamaño, si es shiny y cómo apartarlo.</p>
 
     <div class="pay-row">
@@ -226,229 +221,271 @@
 </a>
 
 <script>
-/* =====================================================================
-   CÓMO EDITAR ESTE CATÁLOGO (sin tocar el CSS ni el HTML de arriba)
-   =====================================================================
-   Todo el catálogo vive en el arreglo POKEMONES de aquí abajo.
+(function() {
+  'use strict';
 
-   ➜ AÑADIR UN POKÉMON NUEVO:
-     Copia un bloque { ... } completo (desde la llave { hasta la
-     llave } con su coma), pégalo antes del "];" y edita sus datos.
+  /* =====================================================================
+     CÓMO EDITAR ESTE CATÁLOGO (sin tocar el CSS ni el HTML de arriba)
+     =====================================================================
+     Todo el catálogo vive en el arreglo POKEMONES de aquí abajo.
 
-   ➜ CAMBIAR EL PRECIO:
-     Cambia el número después de "precio:" (sin comillas, sin signo $).
+     ➜ AÑADIR UN POKÉMON NUEVO:
+       Copia un bloque { ... } completo (desde la llave { hasta la
+       llave } con su coma), pégalo antes del "];" y edita sus datos.
 
-   ➜ CAMBIAR SI ESTÁ EN VENTA:
-     "enVenta: true"  -> aparece como "En venta"
-     "enVenta: false" -> aparece como "No disponible"
+     ➜ CAMBIAR EL PRECIO:
+       Cambia el número después de "precio:" (sin comillas, sin signo $).
 
-   ➜ CAMBIAR SI ES SHINY:
-     "shiny: true" o "shiny: false"
+     ➜ CAMBIAR SI ESTÁ EN VENTA:
+       "enVenta: true"  -> aparece como "En venta"
+       "enVenta: false" -> aparece como "No disponible"
 
-   ➜ TIPOS (ahora siempre en plural, como lista, aunque sea uno solo):
-     "tipos: [\"Fuego\"]"              -> un solo tipo
-     "tipos: [\"Psíquico\", \"Dragón\"]" -> dos tipos
-     Los nombres deben coincidir EXACTO (con acentos) con los que
-     están en TYPE_COLORS más abajo, o saldrán en gris.
+     ➜ CAMBIAR SI ES SHINY:
+       "shiny: true" o "shiny: false"
 
-   ➜ EVENTO (opcional):
-     "evento: \"Community Day\""  -> muestra una etiqueta roja con ese texto
-     "evento: \"\""               -> no muestra nada (déjalo vacío si no aplica)
+     ➜ TIPOS (ahora siempre en plural, como lista, aunque sea uno solo):
+       "tipos: [\"Fuego\"]"              -> un solo tipo
+       "tipos: [\"Psíquico\", \"Dragón\"]" -> dos tipos
+       Los nombres deben coincidir EXACTO (con acentos) con los que
+       están en TYPE_COLORS más abajo, o saldrán en gris.
 
-   ➜ DISFRAZ (opcional):
-     "disfraz: \"Detective\""     -> muestra una etiqueta azul con ese texto
-     "disfraz: \"\""              -> no muestra nada (déjalo vacío si no aplica)
+     ➜ EVENTO (opcional):
+       "evento: \"Community Day\""  -> muestra una etiqueta roja con ese texto
+       "evento: \"\""               -> no muestra nada (déjalo vacío si no aplica)
 
-   ➜ FONDO EXCLUSIVO (opcional):
-     "fondo: \"Halloween 2024\""  -> muestra una etiqueta verde con ese texto
-     "fondo: \"\""                -> no muestra nada (déjalo vacío si no aplica)
+     ➜ DISFRAZ (opcional):
+       "disfraz: \"Detective\""     -> muestra una etiqueta azul con ese texto
+       "disfraz: \"\""              -> no muestra nada (déjalo vacío si no aplica)
 
-   ➜ DINAMAX / GIGAMAX (opcional):
-     "dynamax: \"Dinamax\""   -> muestra una etiqueta amarilla "Dinamax"
-     "dynamax: \"Gigamax\""   -> muestra una etiqueta amarilla "Gigamax"
-     "dynamax: \"\""          -> no muestra nada (déjalo vacío si no aplica)
+     ➜ FONDO EXCLUSIVO (opcional):
+       "fondo: \"Halloween 2024\""  -> muestra una etiqueta verde con ese texto
+       "fondo: \"\""                -> no muestra nada (déjalo vacío si no aplica)
 
-   ➜ CAMBIAR LA IMAGEN:
-     "imagen:" debe ser el nombre exacto del archivo dentro de la
-     carpeta /images de tu repositorio de GitHub (ej. "pikachu.png").
-     Si el archivo no existe todavía, se muestra una Poké Ball gris.
+     ➜ DINAMAX / GIGAMAX (opcional):
+       "dynamax: \"Dinamax\""   -> muestra una etiqueta amarilla "Dinamax"
+       "dynamax: \"Gigamax\""   -> muestra una etiqueta amarilla "Gigamax"
+       "dynamax: \"\""          -> no muestra nada (déjalo vacío si no aplica)
 
-   ➜ QUITAR UN POKÉMON:
-     Borra su bloque { ... } completo (con su coma).
-   ===================================================================== */
+     ➜ CAMBIAR LA IMAGEN:
+       "imagen:" debe ser el nombre exacto del archivo dentro de la
+       carpeta /images de tu repositorio de GitHub (ej. "pikachu.png").
+       Si el archivo no existe todavía, se muestra una Poké Ball gris.
 
-const POKEMONES = [
-  {
-    nombre: "Pikachu",
-    tipos: ["Eléctrico"],
-    precio: 150,
-    enVenta: true,
-    shiny: true,
-    evento: "Pokemon GO Fest 2026",
-    disfraz: "Gorra equipo Mistico",
-    fondo: "",
-    dynamax: "",
-    tamano: "0.4 m",
-    imagen: "pikachu.png",
-    descripcion: "Todos lo conocen."
-  },
-  {
-    nombre: "Charizard",
-    tipos: ["Fuego", "Volador"],
-    precio: 250,
-    enVenta: true,
-    shiny: true,
-    evento: "",
-    disfraz: "",
-    fondo: "",
-    dynamax: "Gigamax",
-    tamano: "2.03 m",
-    imagen: "charizard-g.png",
-    descripcion: "Exclusivo y util en combates Max."
-  },
-  {
-    nombre: "Latias",
-    tipos: ["Dragón", "Psíquico"],
-    precio: 70,
-    enVenta: true,
-    shiny: true,
-    evento: "",
-    disfraz: "",
-    fondo: "Pokemon GO Fest 2026",
-    dynamax: "",
-    tamano: "2.1 m",
-    imagen: "latias.png",
-    descripcion: "No muy util para combates o incursiones, pero es una buena pieza de coleccion."
-  },
-  {
-    nombre: "Mewtwo",
-    tipos: ["Psíquico"],
-    precio: 150,
-    enVenta: true,
-    shiny: false,
-    evento: "Pokemon GO Fest 2026",
-    disfraz: "",
-    fondo: "Pokemon GO Fest 2026",
-    dynamax: "",
-    tamano: "0.3 m",
-    imagen: "mewtwo.png",
-    descripcion: "Ataque exclusivo: Contraataque."
-  },
-  {
-    nombre: "Giratina (Forma Origen)",
-    tipos: ["Fantasma", "Dragón"],
-    precio: 200,
-    enVenta: true,
-    shiny: true,
-    evento: "Pokemon GO Fest 2026",
-    disfraz: "",
-    fondo: "",
-    dynamax: "",
-    tamano: "6.5 m",
-    imagen: "giratina.png",
-    descripcion: "La aura en persona, y ahora Shiny."
+     ➜ QUITAR UN POKÉMON:
+       Borra su bloque { ... } completo (con su coma).
+     ===================================================================== */
+
+  var POKEMONES = [
+    {
+      nombre: "Pikachu",
+      tipos: ["Eléctrico"],
+      precio: 150,
+      enVenta: true,
+      shiny: true,
+      evento: "Pokemon GO Fest 2026",
+      disfraz: "Gorra equipo Mistico",
+      fondo: "",
+      dynamax: "",
+      tamano: "0.4 m",
+      imagen: "pikachu.png",
+      descripcion: "Todos lo conocen."
+    },
+    {
+      nombre: "Charizard",
+      tipos: ["Fuego", "Volador"],
+      precio: 250,
+      enVenta: true,
+      shiny: true,
+      evento: "",
+      disfraz: "",
+      fondo: "",
+      dynamax: "Gigamax",
+      tamano: "2.03 m",
+      imagen: "charizard-g.png",
+      descripcion: "Exclusivo y util en combates Max."
+    },
+    {
+      nombre: "Latias",
+      tipos: ["Dragón", "Psíquico"],
+      precio: 70,
+      enVenta: true,
+      shiny: true,
+      evento: "",
+      disfraz: "",
+      fondo: "Pokemon GO Fest 2026",
+      dynamax: "",
+      tamano: "2.1 m",
+      imagen: "latias.png",
+      descripcion: "No muy util para combates o incursiones, pero es una buena pieza de coleccion."
+    },
+    {
+      nombre: "Mewtwo",
+      tipos: ["Psíquico"],
+      precio: 150,
+      enVenta: true,
+      shiny: false,
+      evento: "Pokemon GO Fest 2026",
+      disfraz: "",
+      fondo: "Pokemon GO Fest 2026",
+      dynamax: "",
+      tamano: "0.3 m",
+      imagen: "mewtwo.png",
+      descripcion: "Ataque exclusivo: Contraataque."
+    },
+    {
+      nombre: "Giratina (Forma Origen)",
+      tipos: ["Fantasma", "Dragón"],
+      precio: 200,
+      enVenta: true,
+      shiny: true,
+      evento: "Pokemon GO Fest 2026",
+      disfraz: "",
+      fondo: "",
+      dynamax: "",
+      tamano: "6.5 m",
+      imagen: "giratina.png",
+      descripcion: "La aura en persona, y ahora Shiny."
+    }
+  ];
+
+  /* Los 18 tipos de Pokémon con su [color de fondo, color de texto] */
+  var TYPE_COLORS = {
+    "Normal":    ["#2a2c3e", "#b9beea"],
+    "Fuego":     ["#4a1b12", "#ff7a4a"],
+    "Agua":      ["#0f2a4a", "#5aa9ff"],
+    "Eléctrico": ["#3a2f00", "#ffcb05"],
+    "Planta":    ["#123420", "#3ddc84"],
+    "Hielo":     ["#0e3538", "#7ae0e0"],
+    "Lucha":     ["#3a1414", "#e05a5a"],
+    "Veneno":    ["#2f1240", "#c07aff"],
+    "Tierra":    ["#3a2a12", "#e0b25a"],
+    "Volador":   ["#1a2f4a", "#9fd0ff"],
+    "Psíquico":  ["#3a1730", "#ff7ad1"],
+    "Bicho":     ["#22320f", "#a9d94a"],
+    "Roca":      ["#332a16", "#c9a35d"],
+    "Fantasma":  ["#221a3d", "#9a8cff"],
+    "Dragón":    ["#241a4a", "#a67aff"],
+    "Siniestro": ["#181820", "#8a8a9a"],
+    "Acero":     ["#242832", "#b9c4d6"],
+    "Hada":      ["#3a1a2a", "#ff9ad1"]
+  };
+
+  function tipoColor(tipo){
+    var c = TYPE_COLORS[tipo] || ["#23264a", "#a7addc"];
+    return 'background:' + c[0] + '; color:' + c[1] + ';';
   }
-];
 
-/* Los 18 tipos de Pokémon con su [color de fondo, color de texto] */
-const TYPE_COLORS = {
-  "Normal":    ["#2a2c3e", "#b9beea"],
-  "Fuego":     ["#4a1b12", "#ff7a4a"],
-  "Agua":      ["#0f2a4a", "#5aa9ff"],
-  "Eléctrico": ["#3a2f00", "#ffcb05"],
-  "Planta":    ["#123420", "#3ddc84"],
-  "Hielo":     ["#0e3538", "#7ae0e0"],
-  "Lucha":     ["#3a1414", "#e05a5a"],
-  "Veneno":    ["#2f1240", "#c07aff"],
-  "Tierra":    ["#3a2a12", "#e0b25a"],
-  "Volador":   ["#1a2f4a", "#9fd0ff"],
-  "Psíquico":  ["#3a1730", "#ff7ad1"],
-  "Bicho":     ["#22320f", "#a9d94a"],
-  "Roca":      ["#332a16", "#c9a35d"],
-  "Fantasma":  ["#221a3d", "#9a8cff"],
-  "Dragón":    ["#241a4a", "#a67aff"],
-  "Siniestro": ["#181820", "#8a8a9a"],
-  "Acero":     ["#242832", "#b9c4d6"],
-  "Hada":      ["#3a1a2a", "#ff9ad1"]
-};
+  var FALLBACK_IMG = "data:image/svg+xml;utf8," + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="92" height="92">' +
+    '<circle cx="46" cy="46" r="40" fill="none" stroke="#7d84ad" stroke-width="4"/>' +
+    '<path d="M6 46 H86" stroke="#7d84ad" stroke-width="4"/>' +
+    '<circle cx="46" cy="46" r="10" fill="#1f2347" stroke="#7d84ad" stroke-width="4"/>' +
+    '</svg>'
+  );
 
-function tipoColor(tipo){
-  const c = TYPE_COLORS[tipo] || ["#23264a", "#a7addc"];
-  return `background:${c[0]}; color:${c[1]};`;
-}
+  function waLink(p){
+    var msg = "Hola, Me interesa el " + p.nombre + " por ($" + p.precio + ")";
+    return "https://wa.me/529844681306?text=" + encodeURIComponent(msg);
+  }
 
-/* =====================================================================
-   COMPATIBILIDAD DE IMÁGENES (SRC)
-   =====================================================================
-   Ya configurado con tu repositorio real:
-   https://github.com/ZephyrXVex4z/Pok-mon-GO-Shop
+  function renderCatalogo(soloEnVenta){
+    var cont = document.getElementById('catalogo');
+    if (!cont) return;
+    cont.innerHTML = "";
 
-   Tus imágenes viven en la RAÍZ del repo (no en una carpeta /images),
-   así que la base apunta directo ahí. Si en el futuro subes imágenes
-   nuevas, ponlas también en la raíz del repo (junto a index.html).
-   ===================================================================== */
-const GITHUB_IMAGES_BASE = "https://raw.githubusercontent.com/ZephyrXVex4z/Pok-mon-GO-Shop/main/";
+    for (var i = 0; i < POKEMONES.length; i++) {
+      (function(p) {
+        if (soloEnVenta && !p.enVenta) return;
 
-function imgSrc(nombreArchivo){
-  const base = GITHUB_IMAGES_BASE.trim();
-  return (base ? base : "") + nombreArchivo;
-}
+        var card = document.createElement('div');
+        card.className = 'card' + (p.shiny ? ' shiny' : '');
 
-const FALLBACK_IMG =
-  "data:image/svg+xml;utf8," + encodeURIComponent(`
-    <svg xmlns='http://www.w3.org/2000/svg' width='92' height='92'>
-      <circle cx='46' cy='46' r='40' fill='none' stroke='#7d84ad' stroke-width='4'/>
-      <path d='M6 46 H86' stroke='#7d84ad' stroke-width='4'/>
-      <circle cx='46' cy='46' r='10' fill='#1f2347' stroke='#7d84ad' stroke-width='4'/>
-    </svg>`);
+        var tiposHtml = '';
+        for (var j = 0; j < p.tipos.length; j++) {
+          tiposHtml += '<span class="type-badge" style="' + tipoColor(p.tipos[j]) + '">' + p.tipos[j] + '</span>';
+        }
 
-function waLink(p){
-  const msg = `Hola, Me interesa ${p.nombre} por ($${p.precio})`;
-  return `https://wa.me/529844681306?text=${encodeURIComponent(msg)}`;
-}
+        var shinyHtml = p.shiny ? '<span class="shiny-badge">✨ Shiny</span>' : '';
+        var eventoHtml = p.evento ? '<span class="evento-badge">🎉 ' + p.evento + '</span>' : '';
+        var disfrazHtml = p.disfraz ? '<span class="disfraz-badge">🎭 ' + p.disfraz + '</span>' : '';
+        var fondoHtml = p.fondo ? '<span class="fondo-badge">🖼️ ' + p.fondo + '</span>' : '';
+        var dynaHtml = p.dynamax ? '<span class="dyna-badge">⚡ ' + p.dynamax + '</span>' : '';
 
-function renderCatalogo(soloEnVenta){
-  const cont = document.getElementById('catalogo');
-  cont.innerHTML = "";
+        card.innerHTML =
+          '<button class="card-head" aria-expanded="false">' +
+            '<span class="ball"></span>' +
+            '<span class="head-info">' +
+              '<span class="name-row">' +
+                '<span class="name">' + p.nombre + '</span>' +
+                tiposHtml +
+                shinyHtml +
+                eventoHtml +
+                disfrazHtml +
+                fondoHtml +
+                dynaHtml +
+              '</span>' +
+            '</span>' +
+            '<span class="price">$' + p.precio + '</span>' +
+            '<span class="pill ' + (p.enVenta ? 'venta' : 'no') + '">' + (p.enVenta ? 'En venta' : 'No disp.') + '</span>' +
+          '</button>' +
+          '<div class="card-body">' +
+            '<div class="card-body-inner">' +
+              '<div class="media">' +
+                '<img src="images/' + p.imagen + '" alt="' + p.nombre + '" onerror="this.onerror=null;this.src=\'' + FALLBACK_IMG + '\';">' +
+                '<dl class="stats">' +
+                  '<div class="stat"><dt>Tamaño</dt><dd>' + p.tamano + '</dd></div>' +
+                  '<div class="stat"><dt>Shiny</dt><dd>' + (p.shiny ? 'Sí' : 'No') + '</dd></div>' +
+                  '<div class="stat"><dt>Precio</dt><dd>$' + p.precio + '</dd></div>' +
+                  '<div class="stat"><dt>Estado</dt><dd>' + (p.enVenta ? 'En venta' : 'No disponible') + '</dd></div>' +
+                  (p.evento ? '<div class="stat"><dt>Evento</dt><dd>' + p.evento + '</dd></div>' : '') +
+                  (p.disfraz ? '<div class="stat"><dt>Disfraz</dt><dd>' + p.disfraz + '</dd></div>' : '') +
+                  (p.fondo ? '<div class="stat"><dt>Fondo</dt><dd>' + p.fondo + '</dd></div>' : '') +
+                  (p.dynamax ? '<div class="stat"><dt>Forma</dt><dd>' + p.dynamax + '</dd></div>' : '') +
+                '</dl>' +
+              '</div>' +
+              '<p class="desc">' + p.descripcion + '</p>' +
+              '<a class="wa-btn" href="' + waLink(p) + '" target="_blank" rel="noopener">' +
+                '<svg viewBox="0 0 24 24" fill="#0d2b1c"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.02h-.01a8.1 8.1 0 0 1-4.14-1.13l-.3-.18-3.14.82.84-3.06-.19-.31a8.15 8.15 0 0 1-1.24-4.25c0-4.5 3.66-8.16 8.19-8.16 2.19 0 4.24.85 5.79 2.41a8.13 8.13 0 0 1 2.4 5.78c0 4.5-3.67 8.08-8.2 8.08zm4.48-6.14c-.24-.12-1.45-.71-1.67-.8-.22-.08-.39-.12-.55.12-.16.24-.63.79-.78.96-.14.16-.29.18-.53.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.35-1.67-.14-.24-.02-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.31-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.41-.55-.42-.14-.01-.31-.01-.47-.01-.16 0-.43.06-.65.31-.22.24-.86.84-.86 2.05 0 1.21.88 2.38 1 2.54.12.16 1.73 2.64 4.2 3.7.59.25 1.05.4 1.41.52.59.19 1.13.16 1.55.1.47-.07 1.45-.59 1.66-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28z"/></svg>' +
+                'Escríbeme por WhatsApp' +
+              '</a>' +
+            '</div>' +
+          '</div>';
 
-  POKEMONES
-    .filter(p => !soloEnVenta || p.enVenta)
-    .forEach((p, i) => {
-      const card = document.createElement('div');
-      card.className = 'card' + (p.shiny ? ' shiny' : '');
+        var head = card.querySelector('.card-head');
+        var body = card.querySelector('.card-body');
+        if (head && body) {
+          head.addEventListener('click', function() {
+            var isOpen = body.classList.toggle('open');
+            head.setAttribute('aria-expanded', String(isOpen));
+            body.style.maxHeight = isOpen ? body.scrollHeight + 'px' : '0px';
+          });
+        }
 
-      card.innerHTML = `
-        <button class="card-head" aria-expanded="false">
-          <span class="ball"></span>
-          <span class="head-info">
-            <span class="name-row">
-              <span class="name">${p.nombre}</span>
-              ${p.tipos.map(t => `<span class="type-badge" style="${tipoColor(t)}">${t}</span>`).join('')}
-              ${p.shiny ? '<span class="shiny-badge">✨ Shiny</span>' : ''}
-              ${p.evento ? `<span class="evento-badge">🎉 ${p.evento}</span>` : ''}
-              ${p.disfraz ? `<span class="disfraz-badge">🎭 ${p.disfraz}</span>` : ''}
-              ${p.fondo ? `<span class="fondo-badge">🖼️ ${p.fondo}</span>` : ''}
-              ${p.dynamax ? `<span class="dyna-badge">⚡ ${p.dynamax}</span>` : ''}
-            </span>
-          </span>
-          <span class="price">$${p.precio}</span>
-          <span class="pill ${p.enVenta ? 'venta' : 'no'}">${p.enVenta ? 'En venta' : 'No disp.'}</span>
-        </button>
-        <div class="card-body">
-          <div class="card-body-inner">
-            <div class="media">
-              <img src="${imgSrc(p.imagen)}" alt="${p.nombre}" onerror="this.onerror=null;this.src='${FALLBACK_IMG}';">
-              <dl class="stats">
-                <div class="stat"><dt>Tamaño</dt><dd>${p.tamano}</dd></div>
-                <div class="stat"><dt>Shiny</dt><dd>${p.shiny ? 'Sí' : 'No'}</dd></div>
-                <div class="stat"><dt>Precio</dt><dd>$${p.precio}</dd></div>
-                <div class="stat"><dt>Estado</dt><dd>${p.enVenta ? 'En venta' : 'No disponible'}</dd></div>
-                ${p.evento ? `<div class="stat"><dt>Evento</dt><dd>${p.evento}</dd></div>` : ''}
-                ${p.disfraz ? `<div class="stat"><dt>Disfraz</dt><dd>${p.disfraz}</dd></div>` : ''}
-                ${p.fondo ? `<div class="stat"><dt>Fondo</dt><dd>${p.fondo}</dd></div>` : ''}
-                ${p.dynamax ? `<div class="stat"><dt>Forma</dt><dd>${p.dynamax}</dd></div>` : ''}
-              </dl>
-            </div>
-            <p class="desc">${p.descripcion}</p>
-            <a class="wa-btn" href="${waLink(p)}" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="#0d2b1c"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.4
+        cont.appendChild(card);
+      })(POKEMONES[i]);
+    }
+  }
+
+  var soloEnVenta = false;
+  var sw = document.getElementById('filtroSwitch');
+  if (sw) {
+    function toggleFiltro(){
+      soloEnVenta = !soloEnVenta;
+      sw.classList.toggle('on', soloEnVenta);
+      sw.setAttribute('aria-checked', String(soloEnVenta));
+      renderCatalogo(soloEnVenta);
+    }
+    sw.addEventListener('click', toggleFiltro);
+    sw.addEventListener('keydown', function(e) {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleFiltro();
+      }
+    });
+  }
+
+  renderCatalogo(false);
+})();
+</script>
+</body>
+</html>
